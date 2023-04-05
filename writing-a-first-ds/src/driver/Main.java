@@ -6,7 +6,8 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Bag bagOfColors = new Bag();
+        Bag<String> bagOfColors = new Bag<String>();
+        Bag<Integer> bagOfNums = new Bag<Integer>();
 
         String[] colors = {"green", "blue",
             "purple", "gray", "yellow",
@@ -32,5 +33,25 @@ public class Main
 //        }
 
         System.out.println(bagOfColors);
+
+        bagOfColors.remove("purple");
+        System.out.println(bagOfColors);
+        bagOfColors.remove("yellow");
+        System.out.println(bagOfColors);
+
+        //System.out.println(bagOfColors.get(0));
+
+        //use the bag in a regular for loop
+        System.out.println("Printing in for loop");
+        for (int i = 0; i < bagOfColors.size(); i++)
+        {
+            System.out.println(bagOfColors.get(i));
+        }
+
+        System.out.println("Printing in a for-each loop");
+        for (String color : bagOfColors)
+        {
+            System.out.println(color);
+        }
     }
 }

@@ -1,11 +1,11 @@
 package adts;
 
-public interface IBag
+public interface IBag<T>
 {
-	boolean add(Object element);
-	boolean remove(Object element);
-	Object get(int index);
-	boolean contains(Object element);
+	boolean add(T element);
+	boolean remove(T element);
+	T get(int index);
+	boolean contains(T element);
 	int size();
 	int capacity();
 }
