@@ -1,6 +1,7 @@
 package gardens;
 
-public class Garden<T>
+//only allow Plant objects in the Garden
+public class Garden<T extends Plant>
 {
     private T thing;
 

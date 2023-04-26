@@ -3,6 +3,7 @@ package structures;
 import adts.IBag;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 public class Bag<T> implements IBag<T>, Iterable<T>
@@ -10,6 +11,7 @@ public class Bag<T> implements IBag<T>, Iterable<T>
 	private static final int INITIAL_BAG_SIZE = 10;
 	private T[] data;
 	private int nextIndex;
+	private int modCount;
 
 	public Bag()
 	{
@@ -30,6 +32,7 @@ public class Bag<T> implements IBag<T>, Iterable<T>
 			//add the element to the bag
 			data[nextIndex] = element;
 			nextIndex++;
+			modCount++;
 			return true;
 		}
 	}
@@ -61,6 +64,7 @@ public class Bag<T> implements IBag<T>, Iterable<T>
 				}
 				data[nextIndex - 1] = null;
 				nextIndex--;
+				modCount++;
 				return true;
 			}
 		}
@@ -107,15 +111,30 @@ public class Bag<T> implements IBag<T>, Iterable<T>
 	{
 		private int currentIndex = 0;
 
+		//save the modcount when the iterator is created
+		private int savedModCount = modCount;
+
 		@Override
 		public boolean hasNext()
 		{
+			checkForChanges();
+
 			return currentIndex < nextIndex;
+		}
+
+		private void checkForChanges()
+		{
+			if (savedModCount != modCount)
+			{
+				throw new ConcurrentModificationException("Cannot alter the bag while iterating");
+			}
 		}
 
 		@Override
 		public T next()
 		{
+			checkForChanges();
+
 			T saved = data[currentIndex];
 
 			//increment to the next index to return
