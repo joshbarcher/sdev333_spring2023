@@ -2,6 +2,8 @@ package driver;
 
 import structures.Bag;
 
+import java.util.Iterator;
+
 public class Main
 {
     public static void main(String[] args)
@@ -52,6 +54,14 @@ public class Main
         for (String color : bagOfColors)
         {
             System.out.println(color);
+        }
+
+        Iterator<String> it = bagOfColors.iterator();
+        while (it.hasNext())
+        {
+            String element = it.next();
+
+            System.out.println(element);
         }
     }
 }

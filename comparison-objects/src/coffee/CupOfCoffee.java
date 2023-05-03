@@ -1,6 +1,6 @@
 package coffee;
 
-public class CupOfCoffee implements Comparable<CupOfCoffee>
+public class CupOfCoffee /*implements Comparable<CupOfCoffee>*/
 {
     private String type;
     private int sizeOunces;
@@ -15,21 +15,25 @@ public class CupOfCoffee implements Comparable<CupOfCoffee>
         this.hot = hot;
     }
 
-    @Override
+    /*@Override*/
     public int compareTo(CupOfCoffee otherCup)
     {
-        if (sizeOunces < otherCup.sizeOunces)
+        /*if (price < otherCup.price)
         {
             return -1;
         }
-        else if (sizeOunces > otherCup.sizeOunces)
+        else if (price > otherCup.price)
         {
             return 1;
         }
         else //they are the same
         {
             return 0;
-        }
+        }*/
+
+        /*return (int) (price * 100 - otherCup.price * 100);*/
+
+        return type.compareTo(otherCup.type);
     }
 
     public String getType()

@@ -26,8 +26,7 @@ public class Bag<T> implements IBag<T>, Iterable<T>
 		{
 			//bag is full!
 			return false;
-		}
-		else
+		} else
 		{
 			//add the element to the bag
 			data[nextIndex] = element;
