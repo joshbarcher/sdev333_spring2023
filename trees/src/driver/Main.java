@@ -20,5 +20,7 @@ public class Main
 
         System.out.println(numberTree.contains(2));
         System.out.println(numberTree.contains(42));
+
+        System.out.println(numberTree.remove(7));
     }
 }

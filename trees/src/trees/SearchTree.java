@@ -74,6 +74,69 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
     }
 
     @Override
+    public boolean remove(T element)
+    {
+        root = remove(root, element);
+        return false;
+    }
+
+    private Node remove(Node current, T element)
+    {
+        //base case
+        if (current == null)
+        {
+            //not found!
+            System.out.println("Not found!");
+            return null;
+        }
+
+        int comparison = current.data.compareTo(element);
+        if (comparison < 0)
+        {
+            current.right = remove(current.right, element);
+        }
+        else if (comparison > 0)
+        {
+            current.left = remove(current.left, element);
+        }
+        else //base case - we found it!
+        {
+            //no children
+            if (current.left == null && current.right == null)
+            {
+                return null;
+            }
+            else if (current.right == null) //left child
+            {
+                return current.left;
+            }
+            else if (current.left == null) //right child
+            {
+                return current.right;
+            }
+            else //two children
+            {
+                Node largestInLeftTree = findMax(current.left);
+                current.data = largestInLeftTree.data;
+                remove(current.left, largestInLeftTree.data);
+            }
+        }
+        return current;
+    }
+
+    public Node findMax(Node current)
+    {
+        //base case
+        if (current.right == null)
+        {
+            return current;
+        }
+
+        //recursive call
+        return findMax(current.right);
+    }
+
+    @Override
     public int size()
     {
         return 0;
@@ -89,12 +152,6 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
     public void clear()
     {
 
-    }
-
-    @Override
-    public boolean remove(T element)
-    {
-        return false;
     }
 
     @Override
@@ -119,6 +176,11 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
             this.data = data;
             this.left = left;
             this.right = right;
+        }
+
+        public String toString()
+        {
+            return data.toString();
         }
     }
 }
