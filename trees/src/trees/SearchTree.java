@@ -76,8 +76,9 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
     @Override
     public boolean remove(T element)
     {
+        int savedSize = size;
         root = remove(root, element);
-        return false;
+        return savedSize != size;
     }
 
     private Node remove(Node current, T element)
@@ -104,21 +105,24 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
             //no children
             if (current.left == null && current.right == null)
             {
+                size--;
                 return null;
             }
             else if (current.right == null) //left child
             {
+                size--;
                 return current.left;
             }
             else if (current.left == null) //right child
             {
+                size--;
                 return current.right;
             }
             else //two children
             {
                 Node largestInLeftTree = findMax(current.left);
                 current.data = largestInLeftTree.data;
-                remove(current.left, largestInLeftTree.data);
+                current.left = remove(current.left, largestInLeftTree.data);
             }
         }
         return current;
@@ -139,25 +143,31 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
     @Override
     public int size()
     {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty()
     {
-        return false;
+        return size == 0;
     }
 
     @Override
     public void clear()
     {
-
+        root = null;
+        size = 0;
     }
 
     @Override
     public int treeHeight()
     {
         return 0;
+    }
+
+    public String toString()
+    {
+        return root == null ? "null" : root.toString();
     }
 
     private class Node
@@ -178,9 +188,33 @@ public class SearchTree<T extends Comparable<T>> implements ITree<T>
             this.right = right;
         }
 
+        public StringBuilder toString(StringBuilder prefix, boolean isTail, StringBuilder builder)
+        {
+            if(right!=null)
+            {
+                right.toString(new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, builder);
+            }
+
+            builder.append(prefix).append(isTail ? "└── " : "┌── ").append(data).append("\n");
+
+            if(left!=null)
+            {
+                left.toString(new StringBuilder().append(prefix).append(isTail ? "    " : "│   "), true, builder);
+            }
+
+            return builder;
+        }
+
+        /**
+         * Builds a visualization of the tree on the Java console.
+         *
+         * @see https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram-in-java/8948691#8948691
+         * @return a diagram of the tree
+         */
+        @Override
         public String toString()
         {
-            return data.toString();
+            return toString(new StringBuilder(), true, new StringBuilder()).toString();
         }
     }
 }
