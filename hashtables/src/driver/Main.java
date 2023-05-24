@@ -9,12 +9,21 @@ public class Main
         HashTable<String> hashTable = new HashTable<>();
 
         String[] colors = {"chartreuse", "blue", "green",
-                "purple", "teal", "white", "red", "beige", "orange", "gray"};
+                "purple", "teal", "white", "red", "beige",
+                "orange", "gray"};
 
         for (String color : colors)
         {
             hashTable.add(color);
         }
         System.out.println(hashTable);
+
+        //test contains()
+        System.out.println("contains('blue'): " +
+                hashTable.contains("blue"));
+        System.out.println("contains('orange'): " +
+                hashTable.contains("orange"));
+        System.out.println("contains('yellow'): " +
+                hashTable.contains("yellow"));
     }
 }
