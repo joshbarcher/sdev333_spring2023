@@ -73,9 +73,7 @@ public class HashTable<T>
     public boolean contains(T element)
     {
         //find the position where the element should be
-        int code = element.hashCode();
-        code = Math.abs(code);
-        int index = code % table.length;
+        int index = getIndex(element);
 
         while (table[index] != null)
         {
@@ -93,9 +91,18 @@ public class HashTable<T>
 
     public boolean remove(T element)
     {
-        int code = element.hashCode();
-        code = Math.abs(code);
-        int index = code % table.length;
+        //find the index where the element should be
+        int index = getIndex(element);
+
+        while (table[index] != null)
+        {
+            if (table[index].data.equals(element) && table[index].active)
+            {
+                table[index].active = false;
+                return true; //we found it!
+            }
+            index = (index + 1) % table.length;
+        }
 
         return false;
     }

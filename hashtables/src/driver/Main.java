@@ -25,5 +25,15 @@ public class Main
                 hashTable.contains("orange"));
         System.out.println("contains('yellow'): " +
                 hashTable.contains("yellow"));
+
+        //test remove()
+        System.out.println("remove('orange'): " +
+                hashTable.remove("orange"));
+        System.out.println("remove('yellow'): " +
+                hashTable.remove("yellow"));
+
+        //contains() should be false now!
+        System.out.println("contains('orange'): " +
+                hashTable.contains("orange"));
     }
 }
